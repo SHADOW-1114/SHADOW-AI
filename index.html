@@ -2,13 +2,67 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Shadow-AI</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #response {
+      margin-top: 20px;
+      font-size: 17px;
+      color: #222;
+    }
+  </style>
 </head>
 <body>
-  <h2>Shadow-AI से पूछो:</h2>
-  <input id="userInput" placeholder="Type your question here">
-  <button onclick="processInput()">Send</button>
-  <p id="response"></p>
+  <div class="container">
+    <h2>Shadow-AI </h2>
+    <input id="userInput" placeholder="Type your question here...">
+    <button onclick="processInput()">Send</button>
+    <p id="response"></p>
+  </div>
 
   <script>
     function processInput() {
@@ -25,12 +79,13 @@
       } else if (
         input.includes("जन्म") ||
         input.includes("date of birth") ||
-        input.includes("paida") ||
-        input.includes("कब बनी")
+        input.includes("Developer") ||
+        input.includes("कब बना")
       ) {
         reply = "मेरी Date of Birth है 09 July 2025 🗓️";
       } else {
-        reply = "सॉरी, मैं आपका सवाल समझ नहीं पाई।";
+       reply = "सॉरी, मैं आपका सवाल समझ नहीं पाया।";
+        
       }
 
       document.getElementById("response").innerText = reply;
