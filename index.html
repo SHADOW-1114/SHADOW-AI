@@ -1,94 +1,110 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shadow-AI</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      color: white;
     }
+
     .container {
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
       padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      max-width: 420px;
       width: 90%;
       text-align: center;
+      backdrop-filter: blur(12px);
     }
+
     h2 {
-      margin-bottom: 20px;
-      color: #333;
+      font-size: 28px;
+      margin-bottom: 25px;
+      color: #f1c40f;
+      text-shadow: 0 0 10px #f1c40f;
     }
+
     input {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
+      padding: 14px;
+      border: none;
       border-radius: 8px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       font-size: 16px;
+      outline: none;
+      background: #ffffffdd;
+      color: #000;
     }
+
     button {
-      background-color: #4CAF50;
+      background: linear-gradient(to right, #00b09b, #96c93d);
       color: white;
       border: none;
-      padding: 12px 20px;
+      padding: 12px 24px;
       border-radius: 8px;
-      cursor: pointer;
       font-size: 16px;
-      transition: background 0.3s ease;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
+
     button:hover {
-      background-color: #45a049;
+      transform: scale(1.05);
     }
+
     #response {
       margin-top: 20px;
-      font-size: 17px;
-      color: #222;
+      font-size: 18px;
+      color: #e8e8e8;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Shadow-AI </h2>
-    <input id="userInput" placeholder="Type your question here...">
+    <h2>Shadow-AI से पूछो</h2>
+    <input id="userInput" placeholder="Type your question here..." />
     <button onclick="processInput()">Send</button>
     <p id="response"></p>
   </div>
 
   <script>
-    function processInput() {
-      const input = document.getElementById("userInput").value.toLowerCase();
-      let reply = "";
+    async function processInput() {
+      const input = document.getElementById("userInput").value;
+      document.getElementById("response").innerText = "⏳ सोचा जा रहा है...";
 
-      if (
-        input.includes("तुम्हे किसने बनाया") ||
-        input.includes("किसने बनाया") ||
-        input.includes("किसकी मेहनत") ||
-        input.includes("ready किया")
-      ) {
-        reply = "मुझे Vivek Srivastava ने बनाया है, और मेरे Boss हैं Mr. Nirbhaye।";
-      } else if (
-        input.includes("जन्म") ||
-        input.includes("date of birth") ||
-        input.includes("Developer") ||
-        input.includes("कब बना")
-      ) {
-        reply = "मेरी Date of Birth है 09 July 2025 🗓️";
-      } else {
-       reply = "सॉरी, मैं आपका सवाल समझ नहीं पाया।";
-        
-      }
-
+      const reply = await askGemini(input);
       document.getElementById("response").innerText = reply;
+    }
+
+    async function askGemini(prompt) {
+      try {
+        const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=YOUR_GEMINI_API_KEY", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }]
+          })
+        });
+
+        const data = await res.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "कोई जवाब नहीं मिला।";
+        return text;
+      } catch (err) {
+        return "⚠️ कुछ गड़बड़ हो गई।";
+      }
     }
   </script>
 </body>
