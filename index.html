@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>Shadow-AI</title>
+</head>
+<body>
+  <h2>Shadow-AI से पूछो:</h2>
+  <input id="userInput" placeholder="Type your question here">
+  <button onclick="processInput()">Send</button>
+  <p id="response"></p>
+
+  <script>
+    function processInput() {
+      const input = document.getElementById("userInput").value.toLowerCase();
+      let reply = "";
+
+      if (
+        input.includes("तुम्हे किसने बनाया") ||
+        input.includes("किसने बनाया") ||
+        input.includes("किसकी मेहनत") ||
+        input.includes("ready किया")
+      ) {
+        reply = "मुझे Vivek Srivastava ने बनाया है, और मेरे Boss हैं Mr. Nirbhaye।";
+      } else if (
+        input.includes("जन्म") ||
+        input.includes("date of birth") ||
+        input.includes("paida") ||
+        input.includes("कब बनी")
+      ) {
+        reply = "मेरी Date of Birth है 09 July 2025 🗓️";
+      } else {
+        reply = "सॉरी, मैं आपका सवाल समझ नहीं पाई।";
+      }
+
+      document.getElementById("response").innerText = reply;
+    }
+  </script>
+</body>
+</html>
