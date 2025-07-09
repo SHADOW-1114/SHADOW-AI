@@ -1,19 +1,69 @@
-async function processInput() {
-  const input = document.getElementById("userInput").value.trim();
-  const resBox = document.getElementById("response");
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shadow-AI</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
 
-  if (!input) {
-    resBox.innerText = "❗ कृपया कुछ पूछें...";
-    return;
-  }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
 
-  resBox.innerText = "🤖 Shadow सोच रहा है...";
+    h2 {
+      font-size: 28px;
+      margin-bottom: 25px;
+      color: #f1c40f;
+      text-shadow: 0 0 10px #f1c40f;
+    }
 
-  try {
-    const response = await fetch(`https://api.safone.dev/chatgpt?message=${encodeURIComponent(input)}`);
-    const data = await response.json();
-    resBox.innerText = data?.response || "⚠️ जवाब नहीं मिला।";
-  } catch (err) {
-    resBox.innerText = "❌ Error: AI से संपर्क नहीं हो सका।";
-  }
-}
+    input {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      outline: none;
+      background: #ffffffdd;
+      color: #000;
+    }
+
+    button {
+      background: linear-gradient(to right, #00b09b, #96c93d);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    #response {
+      margin-top: 20px;
+      font-size: 18px;
+      
